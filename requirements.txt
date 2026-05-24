@@ -15,6 +15,7 @@ sentence-transformers
 faiss-cpu
 pandas
 openai
+opencv-python-headless
 ultralytics
 tiktoken
 pyyaml
