@@ -260,6 +260,7 @@ def run_data_pipeline(
 
 def merge_heading_and_small_paragraph(payloads):
     pending_heading=None
+    pending_payload=None
     merged_list=[]
     for payload in payloads:
         metadata=payload['metadata']
@@ -279,6 +280,7 @@ def merge_heading_and_small_paragraph(payloads):
                      pending_heading += "\n" + payload_text
                 else:
                     pending_heading = payload_text
+                    pending_payload = payload
             elif element_type in ["heading", "paragraph"]:
                 if pending_heading:
                     payload['text'] = pending_heading+payload_text
@@ -286,7 +288,12 @@ def merge_heading_and_small_paragraph(payloads):
                     pending_heading=None
                 merged_list.append(payload)
     if pending_heading:
-        merged_list[-1]['text']+= merged_list[-1]['text']+pending_heading
+        if merged_list:
+            merged_list[-1]['text'] += "\n" + pending_heading
+        else:
+            if pending_payload:
+                pending_payload['text'] = pending_heading
+                merged_list.append(pending_payload)
     return merged_list
 
 
@@ -317,14 +324,22 @@ def pdf_ingest(pdf_path:str,vector_store,progress_bar):
         merged_output = merge_heading_and_small_paragraph(res["payloads"])
         for payload in merged_output:
             metadata = payload['metadata']
-            pagenumber = metadata['page_number']
-            has_image = metadata.get('has_image',False)
-            image_url = metadata.get('visual_crop_path','')
-            element_type = metadata.get("element_type", "unknown")
+            pagenumber = metadata.get('page_number', 0)
+            if pagenumber is None:
+                pagenumber = 0
+            has_image = bool(metadata.get('has_image', False))
+            image_url = metadata.get('visual_crop_path') or ''
+            element_type = metadata.get("element_type") or "unknown"
             filename = os.path.basename(pdf_path)
+            
+            # Avoid empty or None page content
+            content = payload.get('text') or ''
+            if not content.strip():
+                continue
+                
             documents_list.append(
                 Document(
-                    page_content=payload['text'],
+                    page_content=content,
                     metadata={
                         "page_number": pagenumber,
                         "element_type": element_type,
@@ -350,6 +365,9 @@ def pdf_ingest(pdf_path:str,vector_store,progress_bar):
             else:
                 # Normal merged sections: keep as-is
                 final_chunks.append(doc)
+
+        # Filter out empty chunks to prevent DB errors
+        final_chunks = [c for c in final_chunks if c.page_content and c.page_content.strip()]
 
         if final_chunks:
             vector_store.add_documents(final_chunks)
@@ -515,11 +533,7 @@ if uploaded_files:
 
         progress_bar = st.progress(0)
 
-        vector_store = Chroma(
-                collection_name="data_collection",
-                embedding_function=get_hf_embedding(),
-                persist_directory="./chroma_langchain_db",
-            )
+        vector_store = get_vector_store()
 
         total_files = len(uploaded_files)
 
