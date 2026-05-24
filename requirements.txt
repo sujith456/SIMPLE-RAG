@@ -21,3 +21,4 @@ pyyaml
 bs4
 arxiv
 protobuf<4.21.0
+langchain-classic
