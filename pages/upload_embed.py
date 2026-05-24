@@ -20,7 +20,7 @@ DEFAULT_MODEL_NAME = "yolov10n_best.pt"
 
 def ensure_dir(path):
     os.makedirs(path, exist_ok=True)
-    return os.getcwd()+'\\'+path
+    return os.path.normpath(os.path.join(os.getcwd(), path))
 OUTPUT_DIR= ensure_dir('images')
 class DocumentNode:
     """Represents a structural element parsed from the PDF page."""
