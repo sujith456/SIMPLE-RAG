@@ -47,7 +47,7 @@ def get_yolov10_model(model_name: str = DEFAULT_MODEL_NAME) -> YOLO:
     if _YOLO_MODEL_CACHE is not None:
         return _YOLO_MODEL_CACHE
 
-    local_path =f'C:\\Users\\sujit\\OneDrive\\Documents\\GENAI-Learning\\Complete Generative AI Course\\RAG_APP\\{DEFAULT_MODEL_NAME}'
+    local_path = os.path.join(os.getcwd(), DEFAULT_MODEL_NAME)
     parent_path = None
 
     target_path = None
