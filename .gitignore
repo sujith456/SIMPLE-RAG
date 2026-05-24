@@ -1,7 +1,3 @@
 .vscode
 __pycache__/
 chroma_langchain_db/
-resources_pdf/
-*.png
-*.jpg
-*.jpeg
