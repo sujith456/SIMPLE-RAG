@@ -261,6 +261,7 @@ def run_data_pipeline(
 def merge_heading_and_small_paragraph(payloads):
     pending_heading=None
     merged_list=[]
+    pending_payload = None
     for payload in payloads:
         metadata=payload['metadata']
         payload_text = payload['text']
@@ -279,6 +280,7 @@ def merge_heading_and_small_paragraph(payloads):
                      pending_heading += "\n" + payload_text
                 else:
                     pending_heading = payload_text
+                    pending_payload = payload
             elif element_type in ["heading", "paragraph"]:
                 if pending_heading:
                     payload['text'] = pending_heading+payload_text
@@ -286,7 +288,10 @@ def merge_heading_and_small_paragraph(payloads):
                     pending_heading=None
                 merged_list.append(payload)
     if pending_heading:
-        merged_list[-1]['text']+= merged_list[-1]['text']+pending_heading
+        if merged_list:
+            merged_list[-1]['text']+= merged_list[-1]['text']+pending_heading
+        else:
+            merged_list.append(pending_payload)
     return merged_list
 
 
