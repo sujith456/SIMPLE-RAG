@@ -1,0 +1,92 @@
+model_list:
+- model_name: low
+  litellm_params:
+    model: cloudflare/@cf/meta/llama-3-8b-instruct
+- model_name: low
+  litellm_params:
+    model: cloudflare/@cf/meta/llama-3.2-3b-instruct
+- model_name: low
+  litellm_params:
+    model: cloudflare/@cf/meta/llama-3.1-8b-instruct-fp8
+- model_name: low
+  litellm_params:
+    model: cloudflare/@cf/meta/llama-3.2-1b-instruct
+- model_name: low
+  litellm_params:
+    model: cloudflare/@cf/meta/llama-3.1-8b-instruct-awq
+- model_name: medium
+  litellm_params:
+    model: cloudflare/@cf/meta/llama-2-7b-chat-fp16
+- model_name: medium
+  litellm_params:
+    model: cloudflare/@cf/mistral/mistral-7b-instruct-v0.1
+- model_name: medium
+  litellm_params:
+    model: cloudflare/@cf/mistral/mistral-7b-instruct-v0.2-lora
+- model_name: medium
+  litellm_params:
+    model: cloudflare/@hf/mistral/mistral-7b-instruct-v0.2
+- model_name: medium
+  litellm_params:
+    model: cloudflare/@cf/meta/llama-2-7b-chat-int8
+- model_name: reasoning
+  litellm_params:
+    model: cloudflare/@cf/meta/llama-3.3-70b-instruct-fp8-fast
+- model_name: reasoning
+  litellm_params:
+    model: cloudflare/@cf/qwen/qwen2.5-coder-32b-instruct
+- model_name: low
+  litellm_params:
+    model: gemini/gemini-2.5-flash
+- model_name: low
+  litellm_params:
+    model: groq/qwen/qwen3-32b
+- model_name: low
+  litellm_params:
+    model: groq/llama-3.1-8b-instant
+- model_name: medium
+  litellm_params:
+    model: groq/openai/gpt-oss-20b
+- model_name: medium
+  litellm_params:
+    model: groq/allam-2-7b
+- model_name: reasoning
+  litellm_params:
+    model: groq/openai/gpt-oss-120b
+- model_name: reasoning
+  litellm_params:
+    model: groq/llama-3.3-70b-versatile
+- model_name: low
+  litellm_params:
+    model: openrouter/poolside/laguna-xs.2:free
+- model_name: low
+  litellm_params:
+    model: openrouter/google/gemma-4-26b-a4b-it:free
+- model_name: low
+  litellm_params:
+    model: openrouter/liquid/lfm-2.5-1.2b-instruct:free
+- model_name: medium
+  litellm_params:
+    model: openrouter/baidu/cobuddy:free
+- model_name: medium
+  litellm_params:
+    model: openrouter/owl-alpha
+- model_name: medium
+  litellm_params:
+    model: openrouter/poolside/laguna-m.1:free
+- model_name: reasoning
+  litellm_params:
+    model: openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free
+- model_name: reasoning
+  litellm_params:
+    model: openrouter/arcee-ai/trinity-large-thinking:free
+- model_name: reasoning
+  litellm_params:
+    model: openrouter/nvidia/nemotron-3-super-120b-a12b:free
+- model_name: reasoning
+  litellm_params:
+    model: openrouter/liquid/lfm-2.5-1.2b-thinking:free
+router_settings:
+  routing_strategy: least-busy
+  num_retries: 2
+  timeout: 30
