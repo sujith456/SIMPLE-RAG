@@ -33,6 +33,7 @@ pages = {
         st.Page(home_page, title="Home", icon="🏠"),
         st.Page("pages/upload_embed.py", title="Upload & Embed PDFs", icon="📤"),
         st.Page("pages/streamli_inference.py", title="Ask Documents", icon="💬"),
+        st.Page("pages/conversation_rag.py", title="Chat with Documents", icon="💬"),
     ]
 }
 
