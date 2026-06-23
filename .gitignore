@@ -5,3 +5,4 @@ resources/
 */__pycache__/
 images/
 resources_pdf/
+temp/

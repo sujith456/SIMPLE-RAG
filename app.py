@@ -34,6 +34,7 @@ pages = {
         st.Page("pages/upload_embed.py", title="Upload & Embed PDFs", icon="📤"),
         st.Page("pages/streamli_inference.py", title="Ask Documents", icon="💬"),
         st.Page("pages/conversation_rag.py", title="Chat with Documents", icon="💬"),
+        st.Page("pages/agentic_rag.py", title="Agentic Chat with Tools", icon="🤖"),
     ]
 }
 
