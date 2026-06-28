@@ -6,3 +6,5 @@ resources/
 images/
 resources_pdf/
 temp/
+.env
+notebooks/
